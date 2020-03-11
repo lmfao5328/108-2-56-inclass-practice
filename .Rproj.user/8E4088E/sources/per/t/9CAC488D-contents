@@ -1,0 +1,73 @@
+---
+title: "核電與燃煤支持度相關性"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+theme_set(theme_classic())
+
+read.csv("D:\\RS\\8.csv") -> c8
+read.csv("D:\\RS\\16.csv") -> c16
+
+c8 %>%
+  select(縣市, 編號, 有效票數, 同意票數) %>%
+  filter(縣市 == "臺北市") -> f8
+c16 %>%
+  select(縣市, 編號, 有效票數, 同意票數) %>%
+  filter(縣市 == "臺北市") -> f16
+
+names(f8) <- c("縣市", "編號" , "有效票數_08", "同意票數_08")
+names(f16) <- c("縣市", "編號" , "有效票數_16", "同意票數_16")
+merge(f8, f16) -> f_all
+
+f_all $ "反對燃煤" <- ((f_all $ 同意票數_08) / (f_all $ 有效票數_08)) *100
+f_all $ "支持核電" <- ((f_all $ 同意票數_16) / (f_all $ 有效票數_16)) *100
+
+f_all %>%
+  ggplot(aes(x = 反對燃煤, y = 支持核電)) +
+  geom_point(color = "black") +
+  geom_smooth(method = lm, formula = y ~ splines::bs(x, 3), se = FALSE, color = "red")-> refer
+
+f_all %>%
+  ggplot(aes(反對燃煤)) +
+  geom_freqpoly(binwidth = 1, color = "red") -> standard_08
+
+f_all %>%
+  ggplot(aes(支持核電)) +
+  geom_freqpoly(binwidth = 1, color = "red") -> standard_16
+```
+
+Column {data-width=600}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+refer %>% ggplotly -> t1
+t1
+```
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+standard_08 %>% ggplotly -> s08
+s08
+```
+
+### Chart C
+
+```{r}
+standard_16 %>% ggplotly -> s16
+s16
+```
+
