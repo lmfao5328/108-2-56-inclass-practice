@@ -1,0 +1,8 @@
+"0","my_108_total_credits <- 15     # Y"
+"0","#_108_total_credits <- 15       # N"
+"0","#108_total_credits <- 15        # N"
+"0","#_my_108_total_credits <- 15    # N"
+"0","#my.108.total_credits <- 15     # Y"
+"0",".108.total_credits <- 15       # 隱藏變數"
+"2","錯誤: unexpected symbol in "".108.total_credits""
+"
