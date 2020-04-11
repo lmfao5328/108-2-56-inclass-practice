@@ -99,21 +99,21 @@ toJSON(commit)
 
 ```{r}
 #學期內容
-all_108 <- list(
-  first_108 <- list(
-    course_1 <- list(
+all_108 = list(
+  first_108 = list(
+    course_1 = list(
       Name = "個體經濟學",
       Teacher = "Alice",
       Grade = 85
     ),
-    course_2 <- list(
+    course_2 = list(
       Name = "總體經濟學",
       Teacher = "Mark",
       Grade = 78
     )
   ), 
-  second_108 <- list(
-    course_1 <- list(
+  second_108 = list(
+    course_1 =list(
       Name = "作業研究",
       Teacher = "Jason",
       Grade = 90
@@ -121,23 +121,13 @@ all_108 <- list(
   )
 )
 #個人標頭
-`小明的修課記錄` <- 
+`小明的修課記錄` = 
   list(
     name = "小明",
     semesters = all_108 
   )
 
 print(`小明的修課記錄`)
-```
-
-```{r}
-object1 <- c(2,5)
-object2 <- ymd_hms(
-  c("2015-03-22 12:28:42","2017-12-22 15:33:48"),
-  tz="Asia/Taipei"
-)
-object3 <- list(2, FALSE, c("a","b","c"))
-save(object1, object2, object3, file="threeObjects.Rda")
 ```
 
 ```{r}
@@ -148,5 +138,9 @@ fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authori
 
 ```{r}
 load("threeObjects.Rda")
+```
+
+```{r}
+save(commit, `小明的修課記錄`, file = "20200406.Rda")
 ```
 
